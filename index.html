@@ -14,7 +14,6 @@
 <a class="brand text-decoration-none" href="#">
 ETIQMAIS
 </a>
-<p class="sidebar-label">MENU PRINCIPAL</p>
 <nav class="nav nav-pills flex-column gap-1">
 <button class="nav-link nav-item active" data-screen="products">
 <i class="bi bi-box-seam">
@@ -50,16 +49,14 @@ ETIQMAIS
 <div class="content-area container-fluid px-4 px-xl-5 py-4">
 <header class="page-header d-flex align-items-center justify-content-between mb-4">
 <div>
-<p class="eyebrow mb-1">CONTROLE DE PREÇOS</p>
-<h1 id="page-title" class="h3 mb-0">Produtos</h1>
-<p class="text-secondary small mb-0 mt-1">Organize seu cadastro e prepare a impressão.</p>
+<h1 id="page-title" class="h4 mb-0">Produtos</h1>
 </div>
 <button id="new-product-btn" class="btn btn-success btn-action">
 <i class="bi bi-plus-lg">
 </i> Novo produto</button>
 </header>
 <section id="products" class="screen active">
-<div class="card border-0 shadow-sm mb-3 toolbar-card">
+<div class="card mb-3 toolbar-card">
 <div class="card-body p-3 d-flex align-items-center gap-3">
 <div class="input-group search-group">
 <span class="input-group-text">
@@ -72,7 +69,7 @@ ETIQMAIS
 </span>
 </div>
 </div>
-<div class="card border-0 shadow-sm overflow-hidden table-card">
+<div class="card overflow-hidden table-card">
 <div class="table-responsive">
 <table class="table table-hover align-middle mb-0">
 <thead>
@@ -104,17 +101,11 @@ ETIQMAIS
 <section id="labels" class="screen">
 <div class="row g-4">
 <div class="col-xl-4 col-xxl-3">
-<div class="card border-0 shadow-sm settings-card">
+<div class="card settings-card">
 <div class="card-body p-4">
 <div class="section-heading">
-<span class="section-icon">
-<i class="bi bi-upc-scan">
-</i>
-</span>
-<div>
-<h2 class="h5 mb-1">Etiquetas</h2>
-<p class="text-secondary small mb-0">Configure sua impressão.</p>
-</div>
+<i class="bi bi-upc-scan"></i>
+<h2 class="h6 mb-0">Etiquetas</h2>
 </div>
 <hr>
 <label class="form-label">Modelo<select id="label-size" class="form-select">
@@ -151,12 +142,9 @@ ETIQMAIS
 </div>
 </div>
 <div class="col-xl-8 col-xxl-9">
-<div class="card border-0 shadow-sm preview-card">
+<div class="card preview-card">
 <div class="card-header bg-white d-flex align-items-center justify-content-between py-3">
-<div>
 <h2 class="h6 mb-0">Pré-visualização</h2>
-<small class="text-secondary">Confira antes de enviar para a impressora.</small>
-</div>
 <span class="badge text-bg-light border fw-normal">A4</span>
 </div>
 <div class="preview-canvas">
@@ -170,17 +158,11 @@ ETIQMAIS
 <section id="price-list" class="screen">
 <div class="row g-4">
 <div class="col-xl-4 col-xxl-3">
-<div class="card border-0 shadow-sm settings-card">
+<div class="card settings-card">
 <div class="card-body p-4">
 <div class="section-heading">
-<span class="section-icon">
-<i class="bi bi-file-earmark-text">
-</i>
-</span>
-<div>
-<h2 class="h5 mb-1">Tabela de preços</h2>
-<p class="text-secondary small mb-0">Escolha as informações exibidas.</p>
-</div>
+<i class="bi bi-file-earmark-text"></i>
+<h2 class="h6 mb-0">Tabela de preços</h2>
 </div>
 <hr>
 <label class="form-label">Título da tabela<input id="list-title" class="form-control mt-1" value="Tabela de Preços"/>
@@ -210,12 +192,9 @@ ETIQMAIS
 </div>
 </div>
 <div class="col-xl-8 col-xxl-9">
-<div class="card border-0 shadow-sm preview-card">
+<div class="card preview-card">
 <div class="card-header bg-white d-flex align-items-center justify-content-between py-3">
-<div>
 <h2 class="h6 mb-0">Pré-visualização</h2>
-<small class="text-secondary">Formato padrão A4.</small>
-</div>
 <span class="badge text-bg-light border fw-normal">A4</span>
 </div>
 <div class="preview-canvas">
@@ -229,17 +208,11 @@ ETIQMAIS
 <section id="settings" class="screen">
 <div class="row g-4">
 <div class="col-xl-6 col-xxl-5">
-<div class="card border-0 shadow-sm settings-card">
+<div class="card settings-card">
 <div class="card-body p-4">
 <div class="section-heading">
-<span class="section-icon">
-<i class="bi bi-gear">
-</i>
-</span>
-<div>
-<h2 class="h5 mb-1">Aparência</h2>
-<p class="text-secondary small mb-0">Escolha como o ETIQMAIS deve ser exibido.</p>
-</div>
+<i class="bi bi-gear"></i>
+<h2 class="h6 mb-0">Aparência</h2>
 </div>
 <hr>
 <p class="form-label mb-2">Tema</p>
@@ -260,10 +233,7 @@ ETIQMAIS
 <dialog id="product-modal">
 <form id="product-form" method="dialog">
 <div class="modal-header">
-<div>
-<p class="eyebrow mb-1">CADASTRO DE PRODUTO</p>
-<h2 id="modal-title" class="h4 mb-0">Novo produto</h2>
-</div>
+<h2 id="modal-title" class="h5 mb-0">Novo produto</h2>
 <button type="button" class="btn-close" id="close-modal" aria-label="Fechar">
 </button>
 </div>

@@ -3,10 +3,13 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
 <title>ETIQMAIS</title>
 <link href="vendor/bootstrap.min.css" rel="stylesheet"/>
 <link href="vendor/bootstrap-icons.min.css" rel="stylesheet"/>
-<link rel="stylesheet" href="app.css"/>
+<link rel="stylesheet" href="app.css?v=3"/>
 </head>
 <body>
 <div class="app-window d-flex">
@@ -20,27 +23,22 @@ ETIQMAIS
 </i> Produtos</button>
 <button class="nav-link nav-item" data-screen="labels">
 <i class="bi bi-upc-scan">
-</i> Imprimir etiquetas</button>
+</i> Etiquetas</button>
 <button class="nav-link nav-item" data-screen="price-list">
 <i class="bi bi-file-earmark-text">
-</i> Tabela de preços</button>
+</i> Preços</button>
 <button class="nav-link nav-item" data-screen="settings">
 <i class="bi bi-gear">
 </i> Configurações</button>
 </nav>
 <div class="sidebar-footer mt-auto">
-<div class="storage-note">
-<i class="bi bi-shield-check">
-</i>
-<span>Dados salvos neste computador</span>
-</div>
-<div class="d-grid gap-1 pt-2 border-top border-secondary-subtle">
-<button id="export-btn" class="btn btn-sidebar btn-sm text-start">
+<div class="footer-actions">
+<button id="export-btn" class="btn-sidebar" title="Exportar backup" aria-label="Exportar backup">
 <i class="bi bi-download">
-</i> Exportar backup</button>
-<label class="btn btn-sidebar btn-sm text-start">
+</i></button>
+<label class="btn-sidebar" title="Importar backup" aria-label="Importar backup">
 <i class="bi bi-upload">
-</i> Importar backup<input id="import-input" type="file" accept="application/json"/>
+</i><input id="import-input" type="file" accept="application/json"/>
 </label>
 </div>
 </div>
@@ -270,7 +268,7 @@ ETIQMAIS
 </dialog>
 <div id="print-root">
 </div>
-<script src="app.js">
+<script src="app.js?v=3">
 </script>
 </body>
 </html>

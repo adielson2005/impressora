@@ -13,7 +13,6 @@ body{min-width:0;background:var(--pf-page);color:var(--pf-text);font-family:Inte
 .sidebar{width:248px;min-height:100vh;padding:24px 14px 16px;background:var(--pf-ink);color:#c9cdd2}
 .brand{display:block;padding:4px 10px 27px;color:#fff;font-size:16px;font-weight:650;letter-spacing:-.2px}
 .brand-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:8px;color:#fff;background:var(--pf-accent)}
-.sidebar-label{margin:0 10px 10px;color:#72787f;font-size:10px;font-weight:650;letter-spacing:1.1px}
 .nav-item{width:100%;border:0;text-align:left;color:#aeb3b9!important;padding:9px 12px!important;border-radius:6px!important;font-size:13px;font-weight:500;transition:.15s}
 .nav-item i{width:24px;font-size:16px;display:inline-block}
 .nav-item:hover{color:#fff!important;background:#1e2125}
@@ -23,11 +22,9 @@ body{min-width:0;background:var(--pf-page);color:var(--pf-text);font-family:Inte
 .nav-item[data-screen="price-list"] i{color:var(--icon-pricelist)}
 .nav-item[data-screen="settings"] i{color:var(--icon-settings)}
 .sidebar-footer{padding:14px 8px 0}
-.storage-note{display:flex;align-items:flex-start;gap:7px;padding:0 2px 13px;font-size:11px;line-height:1.35;color:#80868d}
-.storage-note i{color:#5f9c8c;font-size:14px}
-.btn-sidebar{color:#aeb3b9;border:0}
+.footer-actions{display:flex;gap:4px;padding-top:10px;border-top:1px solid #ffffff14}
+.btn-sidebar{width:32px;height:32px;display:grid;place-items:center;color:#aeb3b9;border:0;border-radius:6px;background:transparent;cursor:pointer}
 .btn-sidebar:hover{color:#fff;background:#1e2125}
-.btn-sidebar i{width:21px;display:inline-block}
 .btn-sidebar input{display:none}
 .theme-switch{display:flex;gap:9px;margin-bottom:4px}
 .theme-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:15px 8px;border:1px solid var(--pf-line);border-radius:7px;background:#fff;color:#5c6268;font-size:12px;font-weight:600;cursor:pointer;transition:.15s}
@@ -167,52 +164,43 @@ dialog form{padding:27px}
 /* Tema Claro (light) e Tema Sistema variante B: sidebar clara */
 [data-theme="light"] .sidebar,[data-theme="system"][data-variant="b"] .sidebar{background:var(--light-sidebar-bg);color:var(--light-sidebar-text)}
 [data-theme="light"] .brand,[data-theme="system"][data-variant="b"] .brand{color:#16181a}
-[data-theme="light"] .sidebar-label,[data-theme="system"][data-variant="b"] .sidebar-label{color:var(--light-sidebar-muted)}
 [data-theme="light"] .nav-item,[data-theme="system"][data-variant="b"] .nav-item{color:#484d52!important}
 [data-theme="light"] .nav-item:hover,[data-theme="system"][data-variant="b"] .nav-item:hover{color:#16181a!important;background:var(--light-sidebar-hover)}
 [data-theme="light"] .nav-item.active,[data-theme="system"][data-variant="b"] .nav-item.active{color:#16181a!important;background:var(--light-sidebar-active-bg)!important;box-shadow:inset 2px 0 var(--pf-accent),0 1px 2px #0000000f}
-[data-theme="light"] .storage-note,[data-theme="system"][data-variant="b"] .storage-note{color:var(--light-sidebar-muted)}
-[data-theme="light"] .storage-note i,[data-theme="system"][data-variant="b"] .storage-note i{color:var(--pf-accent)}
 [data-theme="light"] .btn-sidebar,[data-theme="system"][data-variant="b"] .btn-sidebar{color:#484d52}
 [data-theme="light"] .btn-sidebar:hover,[data-theme="system"][data-variant="b"] .btn-sidebar:hover{color:#16181a;background:var(--light-sidebar-hover)}
-[data-theme="light"] .sidebar-footer .d-grid,[data-theme="system"][data-variant="b"] .sidebar-footer .d-grid{border-left-color:#00000018!important}
+[data-theme="light"] .footer-actions,[data-theme="system"][data-variant="b"] .footer-actions{border-top-color:#00000014}
 
 /* Barra superior no desktop (estilo OLX): menu horizontal no topo em vez de lateral */
 @media(min-width:992px){
 .app-window{flex-direction:column!important;max-width:none;width:100%;min-height:100vh}
 .sidebar{width:100%!important;min-height:auto!important;flex-direction:row!important;align-items:center;padding:14px 32px!important;gap:28px;box-shadow:inset 0 -1px #ffffff14}
 .brand{padding:0;margin-right:4px}
-.sidebar-label{display:none}
 .sidebar>.nav{flex-direction:row!important;gap:4px!important}
 .nav-item{width:auto!important}
 .nav-item.active{box-shadow:inset 0 -2px var(--pf-accent)!important}
-.sidebar-footer{margin-top:0!important;margin-left:auto!important;padding:0;display:flex!important;flex-direction:row;align-items:center;gap:18px}
-.storage-note{padding:0;white-space:nowrap}
-.sidebar-footer .d-grid{display:flex!important;flex-direction:row;gap:6px;padding-top:0!important;border-top:0!important;border-left:1px solid #ffffff1f;padding-left:16px!important}
+.sidebar-footer{margin-top:0!important;margin-left:auto!important;padding:0}
+.footer-actions{border-top:0;padding-top:0}
 .content-area{max-width:1280px;margin:0 auto;width:100%}
 
 /* Executável desktop (pywebview): sempre com menu lateral, nunca a barra superior acima */
 html.force-sidebar .app-window{flex-direction:row!important;max-width:1680px!important;width:auto!important;margin:auto!important}
 html.force-sidebar .sidebar{width:248px!important;min-height:100vh!important;flex-direction:column!important;align-items:stretch!important;padding:24px 14px 16px!important;gap:0!important;box-shadow:none!important}
 html.force-sidebar .brand{padding:4px 10px 27px!important;margin-right:0!important}
-html.force-sidebar .sidebar-label{display:block!important}
 html.force-sidebar .sidebar>.nav{flex-direction:column!important;gap:1px!important}
 html.force-sidebar .nav-item{width:100%!important;text-align:left!important}
 html.force-sidebar .nav-item.active{box-shadow:inset 2px 0 var(--pf-accent)!important}
-html.force-sidebar .sidebar-footer{margin-top:auto!important;margin-left:0!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;padding:14px 8px 0!important;display:flex}
-html.force-sidebar .storage-note{padding:0 2px 13px!important;white-space:normal!important}
-html.force-sidebar .sidebar-footer .d-grid{display:grid!important;flex-direction:column!important;border-left:0!important;padding-left:0!important;padding-top:.5rem!important;border-top:1px solid #2a2d31!important}
+html.force-sidebar .sidebar-footer{margin-top:auto!important;margin-left:0!important;padding:14px 8px 0!important;display:block}
 html.force-sidebar .content-area{max-width:none!important;margin:0!important}
 }
-html.force-sidebar[data-theme="light"] .sidebar-footer .d-grid,html.force-sidebar[data-theme="system"][data-variant="b"] .sidebar-footer .d-grid{border-top-color:#dcdddf!important}
 
 @media(max-width:991.98px){.sidebar{width:72px;padding:24px 9px}
 .brand{padding:4px 10px 27px}
-.brand>span:last-child,.sidebar-label,.storage-note span,.btn-sidebar{font-size:0}
+.brand>span:last-child,.btn-sidebar{font-size:0}
 .nav-item{text-align:center!important}
 .nav-item i{width:auto;font-size:19px}
 .sidebar-footer{padding:14px 0}
-.btn-sidebar i{font-size:16px;width:auto}
+.footer-actions{justify-content:center}
 .content-area{padding-left:24px!important;padding-right:24px!important}
 }
 @media(max-width:767.98px){
@@ -220,7 +208,7 @@ body{background:var(--pf-bg)}
 .app-window{display:block!important;box-shadow:none}
 .sidebar{width:100%;min-height:auto;padding:13px 14px 10px}
 .brand{padding:0 0 11px;font-size:17px}
-.sidebar-label,.storage-note,.sidebar-footer{display:none}
+.sidebar-footer{display:none}
 .sidebar .nav{flex-direction:row!important;gap:5px!important;overflow-x:auto;padding-bottom:2px}
 .nav-item{width:auto;min-width:max-content;padding:8px 10px!important;font-size:12px}
 .nav-item i{width:auto;margin-right:5px;font-size:14px}

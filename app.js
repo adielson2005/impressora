@@ -2,18 +2,42 @@ if (window.pywebview) document.documentElement.classList.add('force-sidebar');
 window.addEventListener('pywebviewready', () => document.documentElement.classList.add('force-sidebar'));
 
 const storageKey = 'preco-facil-products-v1';
+const categoryKey = 'etiqmais-categories-v1';
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 const $ = (selector) => document.querySelector(selector);
 let products = JSON.parse(localStorage.getItem(storageKey) || '[]');
+let categories = JSON.parse(localStorage.getItem(categoryKey) || 'null') || [...new Set(products.map(p => p.category).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
 
 function save() { localStorage.setItem(storageKey, JSON.stringify(products)); }
+function saveCategories() { localStorage.setItem(categoryKey, JSON.stringify(categories)); }
+function addCategory(name) {
+  const trimmed = (name || '').trim();
+  if (!trimmed || categories.includes(trimmed)) return trimmed;
+  categories.push(trimmed); categories.sort((a, b) => a.localeCompare(b, 'pt-BR')); saveCategories();
+  return trimmed;
+}
+function populateCategorySelect(select, selected, includeNewOption) {
+  const opts = categories.map(c => `<option value="${esc(c)}">${esc(c)}</option>`);
+  if (selected && !categories.includes(selected)) opts.unshift(`<option value="${esc(selected)}">${esc(selected)}</option>`);
+  select.innerHTML = `<option value="">Sem categoria</option>${opts.join('')}${includeNewOption ? '<option value="__new__">+ Nova categoria</option>' : ''}`;
+  select.value = selected || '';
+}
+function renderCategoryFilter() {
+  const sel = $('#filter-category'); const current = sel.value;
+  sel.innerHTML = '<option value="">Todas as categorias</option>' + categories.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  if ([...sel.options].some(o => o.value === current)) sel.value = current;
+}
+function renderCategoryList() {
+  $('#category-list').innerHTML = categories.length ? categories.map(c => `<div class="selection-item"><label style="flex:1">${esc(c)}</label><button class="delete-btn" data-cat="${esc(c)}" title="Remover categoria"><i class="bi bi-trash"></i></button></div>`).join('') : '<p class="muted" style="padding:12px">Nenhuma categoria cadastrada.</p>';
+}
 function esc(value = '') { const d = document.createElement('div'); d.textContent = value; return d.innerHTML; }
 function formatPrice(value) { return money.format(Number(value || 0)); }
 function dateToday() { return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' }).format(new Date()); }
 
 function renderProducts() {
   const query = $('#search-products').value.trim().toLowerCase();
-  const shown = products.filter(p => [p.name, p.code, p.category].join(' ').toLowerCase().includes(query));
+  const catFilter = $('#filter-category').value;
+  const shown = products.filter(p => (!catFilter || p.category === catFilter) && [p.name, p.code, p.category].join(' ').toLowerCase().includes(query));
   $('#product-count').textContent = products.length ? `${shown.length} de ${products.length} produto${products.length === 1 ? '' : 's'}` : '';
   $('#products-body').innerHTML = shown.map(p => `<tr><td><div class="product-name">${esc(p.name)}</div><small class="muted">${esc(p.unit)}</small></td><td>${esc(p.code || '—')}</td><td>${esc(p.category || '—')}</td><td class="price">${formatPrice(p.price)}</td><td class="row-actions"><button class="edit-btn" data-id="${p.id}">Editar</button><button class="delete-btn" data-id="${p.id}">Excluir</button></td></tr>`).join('');
   $('#empty-products').classList.toggle('hidden', products.length > 0);
@@ -55,7 +79,7 @@ function renderList() {
 function openProduct(id) {
   const p = products.find(item => item.id === id) || { id:'', name:'', code:'', category:'', price:'', unit:'UN', wholesalePrice:'', boxQty:'' };
   $('#modal-title').textContent = id ? 'Editar produto' : 'Novo produto';
-  $('#product-id').value = p.id; $('#product-name').value = p.name; $('#product-code').value = p.code; $('#product-category').value = p.category; $('#product-price').value = p.price; $('#product-unit').value = p.unit;
+  $('#product-id').value = p.id; $('#product-name').value = p.name; $('#product-code').value = p.code; populateCategorySelect($('#product-category'), p.category, true); $('#product-price').value = p.price; $('#product-unit').value = p.unit;
   $('#product-wholesale-price').value = p.wholesalePrice || ''; $('#product-box-qty').value = p.boxQty || '';
   $('#product-modal').showModal(); $('#product-name').focus();
 }
@@ -75,6 +99,24 @@ $('#product-form').addEventListener('submit', () => {
 });
 $('#products-body').onclick = (event) => { const id = event.target.dataset.id; if (!id) return; if (event.target.className === 'edit-btn') openProduct(id); if (event.target.className === 'delete-btn' && confirm('Excluir este produto?')) { products = products.filter(p => p.id !== id); save(); renderProducts(); } };
 $('#search-products').addEventListener('input', renderProducts);
+$('#filter-category').addEventListener('change', renderProducts);
+$('#product-category').addEventListener('change', () => {
+  if ($('#product-category').value !== '__new__') return;
+  const name = prompt('Nome da nova categoria:');
+  const added = name && name.trim() ? addCategory(name) : '';
+  populateCategorySelect($('#product-category'), added, true);
+  renderCategoryFilter(); renderCategoryList();
+});
+$('#add-category-btn').onclick = () => {
+  const input = $('#new-category-input');
+  if (addCategory(input.value)) { input.value = ''; renderCategoryFilter(); renderCategoryList(); }
+};
+$('#category-list').onclick = (event) => {
+  const btn = event.target.closest('[data-cat]'); if (!btn) return;
+  if (confirm(`Remover a categoria "${btn.dataset.cat}"? Produtos que já usam esse valor não são alterados.`)) {
+    categories = categories.filter(c => c !== btn.dataset.cat); saveCategories(); renderCategoryList(); renderCategoryFilter();
+  }
+};
 $('#label-size').onchange = () => { $('#custom-size').classList.toggle('hidden', $('#label-size').value !== 'custom'); renderLabels(); };
 ['#label-quantity','#show-barcode','#custom-width','#custom-height'].forEach(s => $(s).addEventListener('input', renderLabels));
 $('#label-products').addEventListener('change', renderLabels);
@@ -82,7 +124,7 @@ $('#label-products').addEventListener('change', renderLabels);
 $('#print-labels').onclick = () => printContent($('#labels-preview').outerHTML);
 $('#print-list').onclick = () => printContent($('#price-list-preview').outerHTML);
 $('#export-btn').onclick = () => { const blob = new Blob([JSON.stringify(products, null, 2)], {type:'application/json'}); const a = Object.assign(document.createElement('a'), {href:URL.createObjectURL(blob), download:`preco-facil-backup-${new Date().toISOString().slice(0,10)}.json`}); a.click(); URL.revokeObjectURL(a.href); };
-$('#import-input').onchange = async (event) => { const file = event.target.files[0]; if (!file) return; try { const content = JSON.parse(await file.text()); if (!Array.isArray(content)) throw Error(); products = content.filter(p => p && p.name).map(p => ({id:p.id || crypto.randomUUID(), name:String(p.name), code:String(p.code || ''), category:String(p.category || ''), price:Number(p.price || 0), unit:p.unit || 'UN', wholesalePrice:Number(p.wholesalePrice || 0), boxQty:Number(p.boxQty || 0)})); save(); renderProducts(); alert('Dados importados com sucesso.'); } catch { alert('Este arquivo de backup não é válido.'); } event.target.value=''; };
+$('#import-input').onchange = async (event) => { const file = event.target.files[0]; if (!file) return; try { const content = JSON.parse(await file.text()); if (!Array.isArray(content)) throw Error(); products = content.filter(p => p && p.name).map(p => ({id:p.id || crypto.randomUUID(), name:String(p.name), code:String(p.code || ''), category:String(p.category || ''), price:Number(p.price || 0), unit:p.unit || 'UN', wholesalePrice:Number(p.wholesalePrice || 0), boxQty:Number(p.boxQty || 0)})); products.forEach(p => addCategory(p.category)); save(); renderCategoryFilter(); renderCategoryList(); renderProducts(); alert('Dados importados com sucesso.'); } catch { alert('Este arquivo de backup não é válido.'); } event.target.value=''; };
 // Proteção básica de interface: impede os atalhos mais comuns para inspeção.
 // Isto não substitui controles de segurança no servidor para aplicativos publicados.
 document.addEventListener('contextmenu', (event) => event.preventDefault());
@@ -135,4 +177,6 @@ document.querySelectorAll('[data-refresh-printer]').forEach(btn => btn.addEventL
 if (window.pywebview) loadPrinters();
 window.addEventListener('pywebviewready', () => loadPrinters());
 
+renderCategoryFilter();
+renderCategoryList();
 renderProducts();

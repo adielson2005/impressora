@@ -9,7 +9,7 @@
 <title>ETIQMAIS</title>
 <link href="vendor/bootstrap.min.css" rel="stylesheet"/>
 <link href="vendor/bootstrap-icons.min.css" rel="stylesheet"/>
-<link rel="stylesheet" href="app.css?v=3"/>
+<link rel="stylesheet" href="app.css?v=4"/>
 </head>
 <body>
 <div class="app-window d-flex">
@@ -63,6 +63,9 @@ ETIQMAIS
 </span>
 <input id="search-products" class="form-control" placeholder="Buscar por nome, código ou categoria"/>
 </div>
+<select id="filter-category" class="form-select form-select-sm w-auto">
+<option value="">Todas as categorias</option>
+</select>
 <span id="product-count" class="small text-secondary ms-auto text-nowrap">
 </span>
 </div>
@@ -223,6 +226,23 @@ ETIQMAIS
 </div>
 </div>
 </div>
+<div class="col-xl-6 col-xxl-5">
+<div class="card settings-card">
+<div class="card-body p-4">
+<div class="section-heading">
+<i class="bi bi-tags"></i>
+<h2 class="h6 mb-0">Categorias</h2>
+</div>
+<hr>
+<div class="input-group input-group-sm mb-3">
+<input id="new-category-input" class="form-control" placeholder="Nova categoria" maxlength="50"/>
+<button id="add-category-btn" class="btn btn-success" type="button"><i class="bi bi-plus-lg"></i></button>
+</div>
+<div id="category-list" class="selection-list">
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
 </div>
@@ -241,7 +261,7 @@ ETIQMAIS
 </label>
 <label class="form-label">Código<input id="product-code" class="form-control mt-1" maxlength="30" placeholder="Ex.: 7891234567890"/>
 </label>
-<label class="form-label">Categoria<input id="product-category" class="form-control mt-1" maxlength="50" placeholder="Ex.: Mercearia"/>
+<label class="form-label">Categoria<select id="product-category" class="form-select mt-1"></select>
 </label>
 <label class="form-label">Preço varejo (R$)<input id="product-price" class="form-control mt-1" required type="number" min="0" step="0.01" placeholder="0,00"/>
 </label>
@@ -268,7 +288,7 @@ ETIQMAIS
 </dialog>
 <div id="print-root">
 </div>
-<script src="app.js?v=3">
+<script src="app.js?v=4">
 </script>
 </body>
 </html>
